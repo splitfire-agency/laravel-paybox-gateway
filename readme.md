@@ -122,7 +122,7 @@ This code should be run in controller, because you should return non-empty respo
  
 #### Capturing previously authorized request
 
-In case you use **Authorization via Paybox System followed by capture via Paybox Direct** you are going to finally capture previously authorized payment (you have up-to 7 days to do that).
+In case you use **Authorization via Paybox System followed by capture via Paybox Direct** you are going to finally capture previously authorized payment (you have up-to 7 days to do that, passed this delay you may loose anti-fraud warranty, contact your Paybox provider to gather appropriate usage informations).
  
 The simplest code could look like this:
 
@@ -132,7 +132,6 @@ $captureRequest = \App::make(\Bnb\PayboxGateway\Requests\Capture::class);
 $response = $captureRequest->setAmount($payment->amount)
                            ->setPayboxCallNumber($payment->call_number)
                            ->setPayboxTransactionNumber($payment->transaction_number)
-                           ->setDayRequestNumber(2)
                            ->send();
                            
 if ($response->isSuccess()) {
@@ -140,7 +139,7 @@ if ($response->isSuccess()) {
 }
 ```
 
-In above code you should make sure value you give for `setDayRequestNumber` is unique number in current day from 1 to 2147483647. For `setPayboxCallNumber` and `setPayboxTransactionNumber` you should use values you received in handling `Handling transaction verify route` step so you should probably save them in this step to use them here.
+For `setPayboxCallNumber` and `setPayboxTransactionNumber` you should use values you received in handling `Handling transaction verify route` step so you should probably save them in this step to use them here.
 
 ### Licence
 
