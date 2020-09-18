@@ -24,6 +24,11 @@ return [
     /*
      * HMAC authentication key - it should be generated in Paybox merchant panel
      */
+    'back_office_password' => env('PAYBOX_BACK_OFFICE_PASSWORD', ''),
+
+    /*
+     * HMAC authentication key - it should be generated in Paybox merchant panel
+     */
     'hmac_key' => env('PAYBOX_HMAC_KEY', ''),
 
     /*

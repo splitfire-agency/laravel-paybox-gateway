@@ -37,4 +37,5 @@ class DirectQuestionField
     const _3D_SECURE_3DSIGNVAL = '3DSIGNVAL';
     const _3D_SECURE_3DSTATUS = '3DSTATUS';
     const _3D_SECURE_3DXID = '3DXID';
+    const KEY = 'CLE';
 }
