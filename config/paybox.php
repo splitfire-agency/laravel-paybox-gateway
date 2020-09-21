@@ -5,6 +5,12 @@ return [
      * Whether test environment is enabled
      */
     'test' => env('PAYBOX_TEST', false),
+    
+    /*
+     * 00103: Paybox Direct
+     * 00104: Paybox Direct Plus
+     */
+    'direct_version' => env('PAYBOX_DIRECT_VERSION', '00104'),
 
     /*
      * Site number (provided by Paybox)
