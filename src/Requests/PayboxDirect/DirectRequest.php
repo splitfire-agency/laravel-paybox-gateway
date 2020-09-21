@@ -54,6 +54,7 @@ abstract class DirectRequest extends Request
     protected $masked = [
         DirectQuestionField::CARD_OR_WALLET_NUMBER,
         DirectQuestionField::CARD_CONTROL_NUMBER,
+        DirectQuestionField::KEY,
     ];
 
 
