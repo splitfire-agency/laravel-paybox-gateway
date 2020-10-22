@@ -1,0 +1,26 @@
+{
+  "name": "laravel-paybox-gateway",
+  "version": "1.0.0",
+  "description": "Laravel 8 Paybox gateway",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "linter": "prettier --write '**/*.php'",
+    "linter:check": "prettier --check 'src/**/*.php' 'tests/**/*.php' 'migrations/**/*.php' 'translations/**/*.php'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/splitfire-agency/laravel-paybox-gateway.git"
+  },
+  "author": "splitfire-agency",
+  "bugs": {
+    "url": "https://github.com/splitfire-agency/laravel-paybox-gateway/issues"
+  },
+  "homepage": "https://github.com/splitfire-agency/laravel-paybox-gateway#readme",
+  "devDependencies": {
+    "prettier": "^2.0.5",
+    "@prettier/plugin-php": "github:prettier/plugin-php"
+  },
+  "dependencies": {}
+}
