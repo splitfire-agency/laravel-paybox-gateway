@@ -7,22 +7,19 @@ use Bnb\PayboxGateway\Responses\PayboxDirect\SubscriberAuthorizationWithCapture 
 
 class SubscriberAuthorizationWithCapture extends SubscriberAuthorization
 {
+  /**
+   * @inheritdoc
+   */
+  public function getQuestionType()
+  {
+    return QuestionTypeCode::SUBSCRIBER_AUTHORIZATION_WITH_CAPTURE;
+  }
 
-    /**
-     * @inheritdoc
-     */
-    public function getQuestionType()
-    {
-        return QuestionTypeCode::SUBSCRIBER_AUTHORIZATION_WITH_CAPTURE;
-    }
-
-
-    /**
-     * @inheritdoc
-     */
-    public function getResponseClass()
-    {
-        return SubscriberAuthorizationWithCaptureResponse::class;
-    }
-
+  /**
+   * @inheritdoc
+   */
+  public function getResponseClass()
+  {
+    return SubscriberAuthorizationWithCaptureResponse::class;
+  }
 }

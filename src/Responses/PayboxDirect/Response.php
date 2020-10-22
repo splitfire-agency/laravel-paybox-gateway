@@ -7,154 +7,143 @@ use Bnb\PayboxGateway\DirectResponseField;
 
 abstract class Response
 {
+  /**
+   * Response body.
+   *
+   * @var string
+   */
+  protected $body;
 
-    /**
-     * Response body.
-     *
-     * @var string
-     */
-    protected $body;
+  /**
+   * Response fields.
+   *
+   * @var array
+   */
+  protected $fields = [];
 
-    /**
-     * Response fields.
-     *
-     * @var array
-     */
-    protected $fields = [];
+  /***
+   * @var \Bnb\PayboxGateway\Models\Response
+   */
+  protected $model;
 
-    /***
-     * @var \Bnb\PayboxGateway\Models\Response
-     */
-    protected $model;
+  /**
+   * Capture constructor.
+   *
+   * @param $body
+   */
+  public function __construct($body)
+  {
+    $this->body = $body;
+    $this->setFields();
+  }
 
+  /**
+   * Get response body.
+   *
+   * @return string
+   */
+  public function getBody()
+  {
+    return $this->body;
+  }
 
-    /**
-     * Capture constructor.
-     *
-     * @param $body
-     */
-    public function __construct($body)
-    {
-        $this->body = $body;
-        $this->setFields();
-    }
+  /**
+   * Get fields from body.
+   *
+   * @return array
+   */
+  public function getFields()
+  {
+    return $this->fields;
+  }
 
+  /**
+   * Get a field from body.
+   *
+   * @return mixed|null
+   *
+   * @see DirectResponseField
+   */
+  public function getField($key)
+  {
+    return isset($this->fields[$key]) ? $this->fields[$key] : null;
+  }
 
-    /**
-     * Get response body.
-     *
-     * @return string
-     */
-    public function getBody()
-    {
-        return $this->body;
-    }
+  /**
+   * Verify whether request was successful.
+   *
+   * @return bool
+   */
+  public function isSuccess()
+  {
+    return $this->fields[DirectResponseField::RESPONSE_CODE] ==
+      DirectResponseCode::SUCCESS;
+  }
 
+  /**
+   * Get Paybox response code.
+   *
+   * @return string
+   */
+  public function getResponseCode()
+  {
+    return $this->fields[DirectResponseField::RESPONSE_CODE];
+  }
 
-    /**
-     * Get fields from body.
-     *
-     * @return array
-     */
-    public function getFields()
-    {
-        return $this->fields;
-    }
+  /**
+   * Get Paybox response comment.
+   *
+   * @return string
+   */
+  public function getComment()
+  {
+    return $this->fields[DirectResponseField::COMMENT];
+  }
 
+  /**
+   * @return \Bnb\PayboxGateway\Models\Response
+   */
+  public function getModel()
+  {
+    return $this->model;
+  }
 
-    /**
-     * Get a field from body.
-     *
-     * @return mixed|null
-     *
-     * @see DirectResponseField
-     */
-    public function getField($key)
-    {
-        return isset($this->fields[$key]) ? $this->fields[$key] : null;
-    }
+  /**
+   * @param \Bnb\PayboxGateway\Models\Response $model
+   *
+   * @return $this
+   */
+  public function setModel(\Bnb\PayboxGateway\Models\Response $model)
+  {
+    $this->model = $model;
 
+    return $this;
+  }
 
-    /**
-     * Verify whether request was successful.
-     *
-     * @return bool
-     */
-    public function isSuccess()
-    {
-        return $this->fields[DirectResponseField::RESPONSE_CODE] == DirectResponseCode::SUCCESS;
-    }
+  /**
+   * Verify whether request should be repeated to secondary server.
+   *
+   * @return bool
+   */
+  public function shouldBeRepeated()
+  {
+    return collect([
+      DirectResponseCode::CONNECTION_FAILED,
+      DirectResponseCode::TIMEOUT,
+      DirectResponseCode::INTERNAL_TIMEOUT,
+    ])->contains($this->fields[DirectResponseField::RESPONSE_CODE]);
+  }
 
+  /**
+   * Set fields from response body.
+   */
+  protected function setFields()
+  {
+    $fields = explode('&', $this->body);
 
-    /**
-     * Get Paybox response code.
-     *
-     * @return string
-     */
-    public function getResponseCode()
-    {
-        return $this->fields[DirectResponseField::RESPONSE_CODE];
-    }
-
-
-    /**
-     * Get Paybox response comment.
-     *
-     * @return string
-     */
-    public function getComment()
-    {
-        return $this->fields[DirectResponseField::COMMENT];
-    }
-
-
-    /**
-     * @return \Bnb\PayboxGateway\Models\Response
-     */
-    public function getModel()
-    {
-        return $this->model;
-    }
-
-
-    /**
-     * @param \Bnb\PayboxGateway\Models\Response $model
-     *
-     * @return $this
-     */
-    public function setModel(\Bnb\PayboxGateway\Models\Response $model)
-    {
-        $this->model = $model;
-
-        return $this;
-    }
-
-
-    /**
-     * Verify whether request should be repeated to secondary server.
-     *
-     * @return bool
-     */
-    public function shouldBeRepeated()
-    {
-        return collect([
-            DirectResponseCode::CONNECTION_FAILED,
-            DirectResponseCode::TIMEOUT,
-            DirectResponseCode::INTERNAL_TIMEOUT,
-        ])->contains($this->fields[DirectResponseField::RESPONSE_CODE]);
-    }
-
-
-    /**
-     * Set fields from response body.
-     */
-    protected function setFields()
-    {
-        $fields = explode('&', $this->body);
-
-        array_walk($fields, function (&$item, &$key) {
-            list($key, $item) = explode('=', $item);
-            $this->fields[$key] = urldecode(iconv('ISO-8859-1', 'UTF-8', $item));
-        });
-    }
+    array_walk($fields, function (&$item, &$key) {
+      list($key, $item) = explode('=', $item);
+      $this->fields[$key] = urldecode(iconv('ISO-8859-1', 'UTF-8', $item));
+    });
+  }
 }

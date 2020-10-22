@@ -7,21 +7,19 @@ use Bnb\PayboxGateway\Responses\PayboxDirect\AuthorizationWithCapture as Authori
 
 class AuthorizationWithCapture extends Authorization
 {
+  /**
+   * @inheritdoc
+   */
+  public function getQuestionType()
+  {
+    return QuestionTypeCode::AUTHORIZATION_WITH_CAPTURE;
+  }
 
-    /**
-     * @inheritdoc
-     */
-    public function getQuestionType()
-    {
-        return QuestionTypeCode::AUTHORIZATION_WITH_CAPTURE;
-    }
-
-
-    /**
-     * @inheritdoc
-     */
-    public function getResponseClass()
-    {
-        return AuthorizationWithCaptureResponse::class;
-    }
+  /**
+   * @inheritdoc
+   */
+  public function getResponseClass()
+  {
+    return AuthorizationWithCaptureResponse::class;
+  }
 }

@@ -7,8 +7,8 @@ use PHPUnit_Framework_TestCase;
 
 class UnitTestCase extends PHPUnit_Framework_TestCase
 {
-    public function tearDown(): void
-    {
-        m::close();
-    }
+  public function tearDown(): void
+  {
+    m::close();
+  }
 }

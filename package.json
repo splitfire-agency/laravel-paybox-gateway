@@ -6,8 +6,8 @@
     "test": "tests"
   },
   "scripts": {
-    "linter": "prettier --write '**/*.php'",
-    "linter:check": "prettier --check 'src/**/*.php' 'tests/**/*.php' 'migrations/**/*.php' 'translations/**/*.php'"
+    "linter": "prettier --write 'config/**/*.php' 'src/**/*.php' 'tests/**/*.php' 'migrations/**/*.php' 'translations/**/*.php'",
+    "linter:check": "prettier --check 'config/**/*.php' 'src/**/*.php' 'tests/**/*.php' 'migrations/**/*.php' 'translations/**/*.php'"
   },
   "repository": {
     "type": "git",

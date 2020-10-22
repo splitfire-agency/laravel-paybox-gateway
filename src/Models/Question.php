@@ -43,131 +43,129 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Question extends Model
 {
+  protected $table = 'ppps_questions';
 
-    protected $table = 'ppps_questions';
+  protected $fillable = [
+    'version',
+    'type',
+    'site',
+    'rang',
+    'activite',
+    'dateq',
+    'reference',
+    'refabonne',
+    'montant',
+    'devise',
+    'porteur',
+    'dateval',
+    'cvv',
+    'numappel',
+    'numtrans',
+    'id3d',
+    '3dcavv',
+    '3dcavvalgo',
+    '3deci',
+    '3denrolled',
+    '3derror',
+    '3dsignval',
+    '3dstatus',
+    '3dxid',
+    'hash',
+    'wallet_id',
+  ];
 
-    protected $fillable = [
-        'version',
-        'type',
-        'site',
-        'rang',
-        'activite',
-        'dateq',
-        'reference',
-        'refabonne',
-        'montant',
-        'devise',
-        'porteur',
-        'dateval',
-        'cvv',
-        'numappel',
-        'numtrans',
-        'id3d',
-        '3dcavv',
-        '3dcavvalgo',
-        '3deci',
-        '3denrolled',
-        '3derror',
-        '3dsignval',
-        '3dstatus',
-        '3dxid',
-        'hash',
-        'wallet_id',
-    ];
+  /**
+   * The "booting" method of the model.
+   *
+   * @return void
+   */
+  protected static function boot()
+  {
+    parent::boot();
 
+    self::created(function (Question $question) {
+      $question->numquestion = str_pad(
+        $question->id % 2147483647,
+        10,
+        '0',
+        STR_PAD_LEFT
+      );
+      $question->save();
+    });
+  }
 
-    /**
-     * The "booting" method of the model.
-     *
-     * @return void
-     */
-    protected static function boot()
-    {
-        parent::boot();
+  /**
+   * @param string $value
+   *
+   * @return string
+   */
+  private static function maskCardControlNumber($value)
+  {
+    return preg_replace('/./', 'X', $value);
+  }
 
-        self::created(function (Question $question) {
-            $question->numquestion = str_pad($question->id % 2147483647, 10, '0', STR_PAD_LEFT);
-            $question->save();
-        });
-    }
+  /**
+   * @param string $value
+   *
+   * @return string
+   */
+  public static function maskCardNumber($value)
+  {
+    return preg_match('/^[0-9]{16}$/', $value)
+      ? substr($value, 0, 4) . str_repeat('X', 8) . substr($value, -4)
+      : $value;
+  }
 
+  /**
+   * @param string $value
+   */
+  public function setPorteurAttribute($value)
+  {
+    $this->attributes['porteur'] = self::maskCardNumber($value);
+  }
 
-    /**
-     * @param string $value
-     *
-     * @return string
-     */
-    private static function maskCardControlNumber($value)
-    {
-        return preg_replace('/./', 'X', $value);
-    }
+  /**
+   * @param string $value
+   */
+  public function setCvvAttribute($value)
+  {
+    $this->attributes['cvv'] = self::maskCardControlNumber($value);
+  }
 
-
-    /**
-     * @param string $value
-     *
-     * @return string
-     */
-    public static function maskCardNumber($value)
-    {
-        return preg_match('/^[0-9]{16}$/', $value) ?
-            (substr($value, 0, 4) . str_repeat('X', 8) . substr($value, -4))
-            : $value;
-    }
-
-
-    /**
-     * @param string $value
-     */
-    public function setPorteurAttribute($value)
-    {
-        $this->attributes['porteur'] = self::maskCardNumber($value);
-    }
-
-
-    /**
-     * @param string $value
-     */
-    public function setCvvAttribute($value)
-    {
-        $this->attributes['cvv'] = self::maskCardControlNumber($value);
-    }
-
-
-    /**
-     * Convert the model instance to an array.
-     *
-     * @return array
-     */
-    public function toArray()
-    {
-        return array_only(parent::toArray(), [
-            'numquestion',
-            'version',
-            'type',
-            'site',
-            'rang',
-            'activite',
-            'dateq',
-            'reference',
-            'refabonne',
-            'montant',
-            'devise',
-            'porteur',
-            'dateval',
-            'cvv',
-            'numappel',
-            'numtrans',
-            'id3d',
-            '3dcavv',
-            '3dcavvalgo',
-            '3deci',
-            '3denrolled',
-            '3derror',
-            '3dsignval',
-            '3dstatus',
-            '3dxid',
-            'hash',
-        ]);
-    }
+  /**
+   * Convert the model instance to an array.
+   *
+   * @return array
+   */
+  public function toArray()
+  {
+    return array_only(parent::toArray(), [
+      'numquestion',
+      'version',
+      'type',
+      'site',
+      'rang',
+      'activite',
+      'dateq',
+      'reference',
+      'refabonne',
+      'montant',
+      'devise',
+      'porteur',
+      'dateval',
+      'cvv',
+      'numappel',
+      'numtrans',
+      'id3d',
+      '3dcavv',
+      '3dcavvalgo',
+      '3deci',
+      '3denrolled',
+      '3derror',
+      '3dsignval',
+      '3dstatus',
+      '3dxid',
+      'hash',
+    ]);
+  }
 }
