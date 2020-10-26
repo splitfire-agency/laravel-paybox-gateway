@@ -44,20 +44,6 @@ class PayboxServiceProvider extends ServiceProvider
       ],
       'config'
     );
-
-    $this->publishes(
-      [
-        realpath(__DIR__ . '/../../views') =>
-          $this->app['path.base'] .
-          DIRECTORY_SEPARATOR .
-          'resources' .
-          DIRECTORY_SEPARATOR .
-          'views' .
-          DIRECTORY_SEPARATOR .
-          'paybox',
-      ],
-      'views'
-    );
   }
 
   /**
