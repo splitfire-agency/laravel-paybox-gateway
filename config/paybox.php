@@ -54,17 +54,17 @@ return [
    * you can add also more values from ResponseField class
    */
   'return_fields' => [
-    'amount' => \Bnb\PayboxGateway\ResponseField::AMOUNT,
+    'amount' => \Sf\PayboxGateway\ResponseField::AMOUNT,
     'authorization_number' =>
-      \Bnb\PayboxGateway\ResponseField::AUTHORIZATION_NUMBER,
-    'order_number' => \Bnb\PayboxGateway\ResponseField::ORDER_NUMBER,
-    'response_code' => \Bnb\PayboxGateway\ResponseField::RESPONSE_CODE,
-    'payment_type' => \Bnb\PayboxGateway\ResponseField::PAYMENT_TYPE,
-    'call_number' => \Bnb\PayboxGateway\ResponseField::PAYBOX_CALL_NUMBER,
+      \Sf\PayboxGateway\ResponseField::AUTHORIZATION_NUMBER,
+    'order_number' => \Sf\PayboxGateway\ResponseField::ORDER_NUMBER,
+    'response_code' => \Sf\PayboxGateway\ResponseField::RESPONSE_CODE,
+    'payment_type' => \Sf\PayboxGateway\ResponseField::PAYMENT_TYPE,
+    'call_number' => \Sf\PayboxGateway\ResponseField::PAYBOX_CALL_NUMBER,
     'transaction_number' =>
-      \Bnb\PayboxGateway\ResponseField::TRANSACTION_NUMBER,
+      \Sf\PayboxGateway\ResponseField::TRANSACTION_NUMBER,
     // signature should be always last return field
-    'signature' => \Bnb\PayboxGateway\ResponseField::SIGNATURE,
+    'signature' => \Sf\PayboxGateway\ResponseField::SIGNATURE,
   ],
 
   /*
