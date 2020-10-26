@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePppsQuestionsTable extends Migration
+class CreatePbxQuestionsTable extends Migration
 {
   /**
    * Run the migrations.
@@ -13,7 +13,7 @@ class CreatePppsQuestionsTable extends Migration
    */
   public function up()
   {
-    Schema::create('ppps_questions', function (Blueprint $table) {
+    Schema::create('pbx_questions', function (Blueprint $table) {
       $table->increments('id');
       $table
         ->string('numquestion', 10)
@@ -50,6 +50,6 @@ class CreatePppsQuestionsTable extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('ppps_questions');
+    Schema::dropIfExists('pbx_questions');
   }
 }

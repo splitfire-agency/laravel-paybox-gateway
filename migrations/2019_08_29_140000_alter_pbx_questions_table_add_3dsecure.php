@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AlterPppsQuestionsTableAdd3dsecure extends Migration
+class AlterPbxQuestionsTableAdd3dsecure extends Migration
 {
   /**
    * Run the migrations.
@@ -13,7 +13,7 @@ class AlterPppsQuestionsTableAdd3dsecure extends Migration
    */
   public function up()
   {
-    Schema::table('ppps_questions', function (Blueprint $table) {
+    Schema::table('pbx_questions', function (Blueprint $table) {
       $table->string('id3d', 20)->nullable();
       $table->string('3dcavv', 28)->nullable();
       $table->string('3dcavvalgo', 64)->nullable();
@@ -33,7 +33,7 @@ class AlterPppsQuestionsTableAdd3dsecure extends Migration
    */
   public function down()
   {
-    Schema::table('ppps_questions', function (Blueprint $table) {
+    Schema::table('pbx_questions', function (Blueprint $table) {
       $table->dropColumn('id3d');
       $table->dropColumn('3dcavv');
       $table->dropColumn('3dcavvalgo');

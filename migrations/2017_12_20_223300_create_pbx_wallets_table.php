@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePppsWalletsTable extends Migration
+class CreatePbxWalletsTable extends Migration
 {
   /**
    * Run the migrations.
@@ -13,7 +13,7 @@ class CreatePppsWalletsTable extends Migration
    */
   public function up()
   {
-    Schema::create('ppps_wallets', function (Blueprint $table) {
+    Schema::create('pbx_wallets', function (Blueprint $table) {
       $table->increments('id');
       $table->string('subscriber_id', 191)->index();
       $table->string('card_number', 19);
@@ -30,6 +30,6 @@ class CreatePppsWalletsTable extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('ppps_wallets');
+    Schema::dropIfExists('pbx_wallets');
   }
 }

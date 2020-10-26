@@ -2,8 +2,9 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreatePppsNotificationsTable extends Migration
+class CreatePbxNotificationsTable extends Migration
 {
   /**
    * Run the migrations.
@@ -12,7 +13,7 @@ class CreatePppsNotificationsTable extends Migration
    */
   public function up()
   {
-    Schema::create('ppps_notifications', function (Blueprint $table) {
+    Schema::create('pbx_notifications', function (Blueprint $table) {
       $table->increments('id');
       $table
         ->string('numquestion', 10)
@@ -39,6 +40,6 @@ class CreatePppsNotificationsTable extends Migration
    */
   public function down()
   {
-    Schema::drop('ppps_notifications');
+    Schema::drop('pbx_notifications');
   }
 }
