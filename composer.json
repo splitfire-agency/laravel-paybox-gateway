@@ -1,6 +1,6 @@
 {
-  "name": "splitfire-agency/laravel-paybox-gateway",
-  "description": "Laravel 8 Paybox gateway",
+  "name": "splitfire-agency/laravel-paybox",
+  "description": "Laravel 8 Paybox",
   "require": {
     "php": ">=7.4",
     "laravel/framework": "^8.0",
@@ -9,7 +9,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Bnb\\PayboxGateway\\": "src/"
+      "Sf\\PayboxGateway\\": "src/"
     }
   },
   "autoload-dev": {
@@ -22,7 +22,9 @@
   "prefer-stable": true,
   "require-dev": {
     "phpunit/phpunit": "^9.3",
-    "mockery/mockery": "^1.3.1"
+    "mockery/mockery": "^1.3.1",
+    "ext-dom": "*",
+    "ext-openssl": "*"
   },
   "extra": {
     "branch-alias": {
@@ -30,7 +32,7 @@
     },
     "laravel": {
       "providers": [
-        "Bnb\\PayboxGateway\\Providers\\PayboxServiceProvider"
+        "Sf\\Paybox\\Providers\\PayboxServiceProvider"
       ]
     }
   }

@@ -1,7 +1,7 @@
 {
-  "name": "laravel-paybox-gateway",
+  "name": "laravel-paybox",
   "version": "1.0.0",
-  "description": "Laravel 8 Paybox gateway",
+  "description": "Laravel 8 Paybox",
   "directories": {
     "test": "tests"
   },
