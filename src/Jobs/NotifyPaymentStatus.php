@@ -7,11 +7,12 @@ use Bnb\PayboxGateway\Models\Notification;
 use Carbon\Carbon;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Config\Repository as Config;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Message;
 use Illuminate\Queue\InteractsWithQueue;
-use Log;
-use Mail;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class NotifyPaymentStatus implements ShouldQueue
 {
@@ -22,9 +23,14 @@ class NotifyPaymentStatus implements ShouldQueue
    */
   private $notificationId;
 
-  public function __construct(Notification $notification)
+  /**
+   * @var Config
+   */
+  protected Config $config;
+
+  public function __construct(Notification $notification, Config $config)
   {
-    $queue = config('paybox.notifications.queue');
+    $queue = $this->config->get('paybox.notifications.queue');
     $this->onConnection($queue['connection']);
     $this->onQueue($queue['queue']);
     $this->notificationId = $notification->id;
@@ -43,7 +49,7 @@ class NotifyPaymentStatus implements ShouldQueue
       return;
     }
 
-    $notifyUrl = config('paybox.notifications.url');
+    $notifyUrl = $this->config->get('paybox.notifications.url');
     try {
       $hash = md5(
         join('+', [
@@ -89,7 +95,7 @@ class NotifyPaymentStatus implements ShouldQueue
     $notification->return_code = $code;
     $notification->return_content = $body;
 
-    if ($email = config('paybox.notifications.notify_to')) {
+    if ($email = $this->config->get('paybox.notifications.notify_to')) {
       $notification->notified_at = Carbon::now();
     }
 
@@ -102,7 +108,7 @@ class NotifyPaymentStatus implements ShouldQueue
     if ($email) {
       try {
         $data = [
-          'url' => config('paybox.notifications.url'),
+          'url' => $this->config->get('paybox.notifications.url'),
           'id' => $notification->id,
           'reference' => $notification->reference,
           'code' => $notification->return_code,
@@ -123,13 +129,13 @@ EMAIL
           function (Message $message) use ($email, $data) {
             $message
               ->from(
-                config(
+                $this->config->get(
                   'paybox.notifications.notify_from.address',
-                  config('mail.from.address')
+                  $this->config->get('mail.from.address')
                 ),
-                config(
+                $this->config->get(
                   'paybox.notifications.notify_from.name',
-                  config('mail.from.name')
+                  $this->config->get('mail.from.name')
                 )
               )
               ->to($email)
@@ -143,7 +149,7 @@ EMAIL
           }
         );
       } catch (\Throwable $e) {
-        Log::error('Failed to send IPN failrure notification email');
+        Log::error('Failed to send IPN failure notification email');
         Log::error($e);
       }
     }
@@ -153,7 +159,7 @@ EMAIL
         max(
           15,
           $notification->tries *
-            intval(config('paybox.notifications.retry_after'))
+            intval($this->config->get('paybox.notifications.retry_after'))
         )
       );
     }

@@ -33,7 +33,7 @@ abstract class SubscriberRequest extends DirectRequest
     $this->walletId = $wallet->id;
     $this->subscriberNumber = sprintf(
       '%s%010d',
-      config('paybox.wallet_prefix'),
+      $this->config->get('paybox.wallet_prefix'),
       $wallet->id
     );
     $this->subscriberWallet = $wallet->paybox_id;

@@ -139,7 +139,7 @@ class Question extends Model
    */
   public function toArray()
   {
-    return array_only(parent::toArray(), [
+    return array_intersect_key(parent::toArray(), array_flip([
       'numquestion',
       'version',
       'type',
@@ -166,6 +166,6 @@ class Question extends Model
       '3dstatus',
       '3dxid',
       'hash',
-    ]);
+    ]));
   }
 }

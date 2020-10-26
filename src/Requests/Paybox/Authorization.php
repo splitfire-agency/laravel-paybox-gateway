@@ -10,7 +10,6 @@ use Bnb\PayboxGateway\Services\ServerSelector;
 use Carbon\Carbon;
 use Illuminate\Contracts\Config\Repository as Config;
 use Illuminate\Contracts\Routing\UrlGenerator;
-use Illuminate\Contracts\View\Factory as ViewFactory;
 use Illuminate\Routing\Router;
 
 abstract class Authorization extends Request
@@ -78,18 +77,12 @@ abstract class Authorization extends Request
   protected $urlGenerator;
 
   /**
-   * @var ViewFactory
-   */
-  protected $view;
-
-  /**
    * Authorization constructor.
    *
    * @param ServerSelector $serverSelector
    * @param Config $config
    * @param HmacHashGenerator $hmacHashGenerator
    * @param UrlGenerator $urlGenerator
-   * @param ViewFactory $view
    * @param Amount $amountService
    */
   public function __construct(
@@ -97,13 +90,11 @@ abstract class Authorization extends Request
     Config $config,
     HmacHashGenerator $hmacHashGenerator,
     UrlGenerator $urlGenerator,
-    ViewFactory $view,
     Amount $amountService
   ) {
     parent::__construct($serverSelector, $config, $amountService);
     $this->hmacHashGenerator = $hmacHashGenerator;
     $this->urlGenerator = $urlGenerator;
-    $this->view = $view;
   }
 
   /**
@@ -328,23 +319,5 @@ abstract class Authorization extends Request
       $this->urlGenerator->route(
         $this->config->get('paybox.transaction_verify_route_name')
       );
-  }
-
-  /**
-   * Send request with authorization.
-   *
-   * @param string $viewName
-   * @param array $parameters
-   *
-   * @return \Illuminate\Contracts\View\View
-   */
-  public function send($viewName, array $parameters = [])
-  {
-    $parameters = $parameters ?: $this->getParameters();
-
-    return $this->view->make($viewName, [
-      'parameters' => $parameters,
-      'url' => $this->getUrl(),
-    ]);
   }
 }

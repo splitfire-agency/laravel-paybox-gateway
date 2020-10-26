@@ -140,7 +140,7 @@ abstract class DirectRequest extends Request
     ];
 
     if (
-      config('paybox.notifications.enabled') &&
+    $this->config->get('paybox.notifications.enabled') &&
       in_array($this->getQuestionType(), $requestsWithNotifications) &&
       $response->getModel()->codereponse === ResponseCode::SUCCESS
     ) {
@@ -157,10 +157,11 @@ abstract class DirectRequest extends Request
             $response->getModel(),
             $reference,
             $amount
-          )
+          ),
+          $this->config
         );
 
-        if (config('paybox.notifications.queue') !== false) {
+        if ($this->config->get('paybox.notifications.queue') !== false) {
           $dispatcher->dispatch($job);
         } else {
           $dispatcher->dispatchNow($job);
@@ -180,7 +181,7 @@ abstract class DirectRequest extends Request
   {
     $params = [
       DirectQuestionField::HASH => 'SHA512',
-      DirectQuestionField::PAYBOX_VERSION => config(
+      DirectQuestionField::PAYBOX_VERSION => $this->config->get(
         'paybox.direct_version',
         '00104'
       ),
