@@ -2,7 +2,7 @@
 
 namespace Tests\Services;
 
-use Bnb\PayboxGateway\Services\ServerSelector;
+use Sf\PayboxGateway\Services\ServerSelector;
 use DOMDocument;
 use Exception;
 use Illuminate\Config\Repository as Config;

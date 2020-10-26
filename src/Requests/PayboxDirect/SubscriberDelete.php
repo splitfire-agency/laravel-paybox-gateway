@@ -1,10 +1,10 @@
 <?php
 
-namespace Bnb\PayboxGateway\Requests\PayboxDirect;
+namespace Sf\PayboxGateway\Requests\PayboxDirect;
 
-use Bnb\PayboxGateway\DirectQuestionField;
-use Bnb\PayboxGateway\QuestionTypeCode;
-use Bnb\PayboxGateway\Responses\PayboxDirect\SubscriberDelete as SubscriberDeleteResponse;
+use Sf\PayboxGateway\DirectQuestionField;
+use Sf\PayboxGateway\QuestionTypeCode;
+use Sf\PayboxGateway\Responses\PayboxDirect\SubscriberDelete as SubscriberDeleteResponse;
 
 class SubscriberDelete extends SubscriberRequest
 {

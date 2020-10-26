@@ -1,11 +1,11 @@
 <?php
 
-namespace Bnb\PayboxGateway\Requests\PayboxDirect;
+namespace Sf\PayboxGateway\Requests\PayboxDirect;
 
-use Bnb\PayboxGateway\ActivityCode;
-use Bnb\PayboxGateway\DirectQuestionField;
-use Bnb\PayboxGateway\QuestionTypeCode;
-use Bnb\PayboxGateway\Responses\PayboxDirect\SubscriberAuthorization as SubscriberAuthorizationResponse;
+use Sf\PayboxGateway\ActivityCode;
+use Sf\PayboxGateway\DirectQuestionField;
+use Sf\PayboxGateway\QuestionTypeCode;
+use Sf\PayboxGateway\Responses\PayboxDirect\SubscriberAuthorization as SubscriberAuthorizationResponse;
 use Carbon\Carbon;
 
 class SubscriberAuthorization extends SubscriberRequest

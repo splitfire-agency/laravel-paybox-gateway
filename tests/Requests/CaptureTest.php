@@ -2,8 +2,8 @@
 
 namespace Tests\Requests;
 
-use Bnb\PayboxGateway\Currency;
-use Bnb\PayboxGateway\Responses\PayboxDirect\Capture as CaptureResponse;
+use Sf\PayboxGateway\Currency;
+use Sf\PayboxGateway\Responses\PayboxDirect\Capture as CaptureResponse;
 use Carbon\Carbon;
 use Tests\Helpers\Direct as DirectHelper;
 use Tests\UnitTestCase;
@@ -23,7 +23,7 @@ class CaptureTest extends UnitTestCase
   public function setUp(): void
   {
     parent::setUp();
-    $this->setUpMocks(\Bnb\PayboxGateway\Requests\PayboxDirect\Capture::class);
+    $this->setUpMocks(\Sf\PayboxGateway\Requests\PayboxDirect\Capture::class);
   }
 
   /** @test */

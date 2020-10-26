@@ -1,6 +1,6 @@
 <?php
 
-namespace Bnb\PayboxGateway\Models;
+namespace Sf\PayboxGateway\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon created_at
  * @property Carbon updated_at
  *
- * @package Bnb\PayboxGateway\Models
+ * @package Sf\PayboxGateway\Models
  */
 class Wallet extends Model
 {

@@ -2,16 +2,16 @@
 
 namespace Tests\Helpers;
 
-use Bnb\PayboxGateway\Requests\PayboxDirect\DirectRequest;
-use Bnb\PayboxGateway\Requests\Request;
-use Bnb\PayboxGateway\Services\Amount;
-use Bnb\PayboxGateway\Services\HmacHashGenerator;
-use Bnb\PayboxGateway\Services\ServerSelector;
+use Sf\PayboxGateway\Requests\PayboxDirect\DirectRequest;
+use Sf\PayboxGateway\Requests\Request;
+use Sf\PayboxGateway\Services\Amount;
+use Sf\PayboxGateway\Services\HmacHashGenerator;
+use Sf\PayboxGateway\Services\ServerSelector;
 use Illuminate\Contracts\Config\Repository as Config;
 use Mockery;
 use Mockery\LegacyMockInterface;
 use Mockery\MockInterface;
-use Bnb\PayboxGateway\HttpClient\GuzzleHttpClient;
+use Sf\PayboxGateway\HttpClient\GuzzleHttpClient;
 
 /**
  * Trait Direct

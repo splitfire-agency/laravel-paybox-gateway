@@ -2,7 +2,7 @@
 
 namespace Tests\Requests;
 
-use Bnb\PayboxGateway\Requests\Paybox\AuthorizationWithoutCapture;
+use Sf\PayboxGateway\Requests\Paybox\AuthorizationWithoutCapture;
 use Tests\Helpers\Authorization as AuthorizationHelper;
 use Tests\UnitTestCase;
 

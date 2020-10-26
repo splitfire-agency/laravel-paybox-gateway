@@ -1,6 +1,6 @@
 <?php
 
-namespace Bnb\PayboxGateway\Services\Exceptions;
+namespace Sf\PayboxGateway\Services\Exceptions;
 
 class InvalidTransactionNumberException extends \Exception
 {

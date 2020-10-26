@@ -1,6 +1,6 @@
 <?php
 
-namespace Bnb\PayboxGateway;
+namespace Sf\PayboxGateway;
 
 /**
  * Class QuestionTypeCode.

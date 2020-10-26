@@ -1,19 +1,19 @@
 <?php
 
-namespace Bnb\PayboxGateway\Requests\PayboxDirect;
+namespace Sf\PayboxGateway\Requests\PayboxDirect;
 
-use Bnb\PayboxGateway\DirectQuestionField;
-use Bnb\PayboxGateway\HttpClient\GuzzleHttpClient;
-use Bnb\PayboxGateway\Jobs\NotifyPaymentStatus;
-use Bnb\PayboxGateway\Models\Notification;
-use Bnb\PayboxGateway\Models\Question;
-use Bnb\PayboxGateway\Models\Response;
-use Bnb\PayboxGateway\QuestionTypeCode;
-use Bnb\PayboxGateway\Requests\Request;
-use Bnb\PayboxGateway\ResponseCode;
-use Bnb\PayboxGateway\Services\Amount;
-use Bnb\PayboxGateway\Services\HmacHashGenerator;
-use Bnb\PayboxGateway\Services\ServerSelector;
+use Sf\PayboxGateway\DirectQuestionField;
+use Sf\PayboxGateway\HttpClient\GuzzleHttpClient;
+use Sf\PayboxGateway\Jobs\NotifyPaymentStatus;
+use Sf\PayboxGateway\Models\Notification;
+use Sf\PayboxGateway\Models\Question;
+use Sf\PayboxGateway\Models\Response;
+use Sf\PayboxGateway\QuestionTypeCode;
+use Sf\PayboxGateway\Requests\Request;
+use Sf\PayboxGateway\ResponseCode;
+use Sf\PayboxGateway\Services\Amount;
+use Sf\PayboxGateway\Services\HmacHashGenerator;
+use Sf\PayboxGateway\Services\ServerSelector;
 use Carbon\Carbon;
 use Illuminate\Contracts\Bus\Dispatcher;
 use Illuminate\Contracts\Config\Repository as Config;
@@ -117,14 +117,14 @@ abstract class DirectRequest extends Request
    *
    * @param array $parameters
    *
-   * @return \Bnb\PayboxGateway\Responses\PayboxDirect\Response
+   * @return \Sf\PayboxGateway\Responses\PayboxDirect\Response
    */
   public function send(array $parameters = [])
   {
     $parameters = $parameters ?: $this->getParameters();
     $responseClass = $this->getResponseClass();
 
-    /** @var \Bnb\PayboxGateway\Responses\PayboxDirect\Response $response */
+    /** @var \Sf\PayboxGateway\Responses\PayboxDirect\Response $response */
     $response = new $responseClass(
       $this->client->request($this->getUrl(), $parameters)
     );

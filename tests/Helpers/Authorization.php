@@ -2,11 +2,11 @@
 
 namespace Tests\Helpers;
 
-use Bnb\PayboxGateway\Requests\Paybox\AuthorizationWithCapture;
-use Bnb\PayboxGateway\Requests\Request;
-use Bnb\PayboxGateway\Services\Amount;
-use Bnb\PayboxGateway\Services\HmacHashGenerator;
-use Bnb\PayboxGateway\Services\ServerSelector;
+use Sf\PayboxGateway\Requests\Paybox\AuthorizationWithCapture;
+use Sf\PayboxGateway\Requests\Request;
+use Sf\PayboxGateway\Services\Amount;
+use Sf\PayboxGateway\Services\HmacHashGenerator;
+use Sf\PayboxGateway\Services\ServerSelector;
 use Illuminate\Contracts\Config\Repository as Config;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Mockery;

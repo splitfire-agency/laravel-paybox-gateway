@@ -1,6 +1,6 @@
 <?php
 
-namespace Bnb\PayboxGateway\Responses\PayboxDirect;
+namespace Sf\PayboxGateway\Responses\PayboxDirect;
 
 class AuthorizationWithCapture extends TransactionResponse
 {

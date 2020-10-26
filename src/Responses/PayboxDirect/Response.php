@@ -1,9 +1,9 @@
 <?php
 
-namespace Bnb\PayboxGateway\Responses\PayboxDirect;
+namespace Sf\PayboxGateway\Responses\PayboxDirect;
 
-use Bnb\PayboxGateway\DirectResponseCode;
-use Bnb\PayboxGateway\DirectResponseField;
+use Sf\PayboxGateway\DirectResponseCode;
+use Sf\PayboxGateway\DirectResponseField;
 
 abstract class Response
 {
@@ -22,7 +22,7 @@ abstract class Response
   protected $fields = [];
 
   /***
-   * @var \Bnb\PayboxGateway\Models\Response
+   * @var \Sf\PayboxGateway\Models\Response
    */
   protected $model;
 
@@ -101,7 +101,7 @@ abstract class Response
   }
 
   /**
-   * @return \Bnb\PayboxGateway\Models\Response
+   * @return \Sf\PayboxGateway\Models\Response
    */
   public function getModel()
   {
@@ -109,11 +109,11 @@ abstract class Response
   }
 
   /**
-   * @param \Bnb\PayboxGateway\Models\Response $model
+   * @param \Sf\PayboxGateway\Models\Response $model
    *
    * @return $this
    */
-  public function setModel(\Bnb\PayboxGateway\Models\Response $model)
+  public function setModel(\Sf\PayboxGateway\Models\Response $model)
   {
     $this->model = $model;
 

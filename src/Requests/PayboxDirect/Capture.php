@@ -1,10 +1,10 @@
 <?php
 
-namespace Bnb\PayboxGateway\Requests\PayboxDirect;
+namespace Sf\PayboxGateway\Requests\PayboxDirect;
 
-use Bnb\PayboxGateway\DirectQuestionField;
-use Bnb\PayboxGateway\QuestionTypeCode;
-use Bnb\PayboxGateway\Responses\PayboxDirect\Capture as CaptureResponse;
+use Sf\PayboxGateway\DirectQuestionField;
+use Sf\PayboxGateway\QuestionTypeCode;
+use Sf\PayboxGateway\Responses\PayboxDirect\Capture as CaptureResponse;
 
 class Capture extends DirectRequest
 {

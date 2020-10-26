@@ -1,8 +1,8 @@
 <?php
 
-namespace Bnb\PayboxGateway\Requests\PayboxDirect;
+namespace Sf\PayboxGateway\Requests\PayboxDirect;
 
-use Bnb\PayboxGateway\Models\Wallet;
+use Sf\PayboxGateway\Models\Wallet;
 
 abstract class SubscriberRequest extends DirectRequest
 {

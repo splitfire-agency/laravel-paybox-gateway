@@ -2,8 +2,8 @@
 
 namespace Tests\Responses;
 
-use Bnb\PayboxGateway\DirectResponseCode;
-use Bnb\PayboxGateway\Responses\PayboxDirect\Capture;
+use Sf\PayboxGateway\DirectResponseCode;
+use Sf\PayboxGateway\Responses\PayboxDirect\Capture;
 use Mockery;
 use Tests\UnitTestCase;
 

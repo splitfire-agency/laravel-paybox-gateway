@@ -1,6 +1,6 @@
 <?php
 
-namespace Bnb\PayboxGateway\Requests\Paybox;
+namespace Sf\PayboxGateway\Requests\Paybox;
 
 class AuthorizationWithoutCapture extends Authorization
 {

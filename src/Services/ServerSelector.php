@@ -1,6 +1,6 @@
 <?php
 
-namespace Bnb\PayboxGateway\Services;
+namespace Sf\PayboxGateway\Services;
 
 use DOMDocument;
 use Exception;

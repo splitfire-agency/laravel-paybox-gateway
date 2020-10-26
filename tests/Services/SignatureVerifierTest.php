@@ -2,7 +2,7 @@
 
 namespace Tests\Services;
 
-use Bnb\PayboxGateway\Services\SignatureVerifier;
+use Sf\PayboxGateway\Services\SignatureVerifier;
 use Tests\UnitTestCase;
 use Mockery as m;
 use Illuminate\Config\Repository as Config;

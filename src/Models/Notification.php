@@ -1,6 +1,6 @@
 <?php
 
-namespace Bnb\PayboxGateway\Models;
+namespace Sf\PayboxGateway\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string return_content
  * @property Carbon notified_at
  *
- * @package Bnb\PayboxGateway\Models
+ * @package Sf\PayboxGateway\Models
  */
 class Notification extends Model
 {

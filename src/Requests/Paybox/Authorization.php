@@ -1,12 +1,12 @@
 <?php
 
-namespace Bnb\PayboxGateway\Requests\Paybox;
+namespace Sf\PayboxGateway\Requests\Paybox;
 
-use Bnb\PayboxGateway\Language;
-use Bnb\PayboxGateway\Requests\Request;
-use Bnb\PayboxGateway\Services\Amount;
-use Bnb\PayboxGateway\Services\HmacHashGenerator;
-use Bnb\PayboxGateway\Services\ServerSelector;
+use Sf\PayboxGateway\Language;
+use Sf\PayboxGateway\Requests\Request;
+use Sf\PayboxGateway\Services\Amount;
+use Sf\PayboxGateway\Services\HmacHashGenerator;
+use Sf\PayboxGateway\Services\ServerSelector;
 use Carbon\Carbon;
 use Illuminate\Contracts\Config\Repository as Config;
 use Illuminate\Contracts\Routing\UrlGenerator;

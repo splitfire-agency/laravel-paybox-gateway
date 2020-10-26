@@ -2,7 +2,7 @@
 
 namespace Tests\Services;
 
-use Bnb\PayboxGateway\Services\Amount;
+use Sf\PayboxGateway\Services\Amount;
 use Tests\UnitTestCase;
 
 /**

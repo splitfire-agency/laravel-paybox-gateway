@@ -1,8 +1,8 @@
 <?php
 
-namespace Bnb\PayboxGateway\Responses\PayboxDirect;
+namespace Sf\PayboxGateway\Responses\PayboxDirect;
 
-use Bnb\PayboxGateway\DirectResponseField;
+use Sf\PayboxGateway\DirectResponseField;
 
 abstract class TransactionResponse extends Response
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Bnb\PayboxGateway\Jobs;
+namespace Sf\PayboxGateway\Jobs;
 
-use Bnb\PayboxGateway\HttpClient\GuzzleHttpClient;
-use Bnb\PayboxGateway\Models\Notification;
+use Sf\PayboxGateway\HttpClient\GuzzleHttpClient;
+use Sf\PayboxGateway\Models\Notification;
 use Carbon\Carbon;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Bus\Queueable;

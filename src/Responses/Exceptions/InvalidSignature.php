@@ -1,6 +1,6 @@
 <?php
 
-namespace Bnb\PayboxGateway\Responses\Exceptions;
+namespace Sf\PayboxGateway\Responses\Exceptions;
 
 use Exception;
 

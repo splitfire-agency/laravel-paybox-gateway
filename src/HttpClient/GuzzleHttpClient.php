@@ -1,6 +1,6 @@
 <?php
 
-namespace Bnb\PayboxGateway\HttpClient;
+namespace Sf\PayboxGateway\HttpClient;
 
 use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
