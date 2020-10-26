@@ -4,21 +4,29 @@ namespace Tests\Responses;
 
 use Bnb\PayboxGateway\DirectResponseCode;
 use Bnb\PayboxGateway\Responses\PayboxDirect\Capture;
-use Mockery as m;
+use Mockery;
 use Tests\UnitTestCase;
 
+/**
+ * Class CaptureTest
+ * @package Tests\Responses
+ * @group CaptureResponseTest
+ */
 class CaptureTest extends UnitTestCase
 {
-  /** @test */
-  public function getFields_it_gets_valid_fields()
+  /**
+   * Test get fields it gets valid fields
+   */
+  public function testGetFieldsItGetsValidFields()
   {
     $frenchMessage = 'Transaction non trouvé';
 
     $responseBody =
       'foo=bar&a=b&c=d&message=' . iconv('UTF-8', 'ISO-8859-1', $frenchMessage);
 
-    $response = m::mock(Capture::class, [$responseBody])->makePartial();
+    $response = Mockery::mock(Capture::class, [$responseBody])->makePartial();
 
+    /** @var Capture $response */
     $fields = $response->getFields();
     $this->assertEquals(
       [
@@ -31,78 +39,102 @@ class CaptureTest extends UnitTestCase
     );
   }
 
-  /** @test */
-  public function isSuccess_it_returns_true_when_success()
+  /**
+   * Test isSuccess it returns true when success
+   */
+  public function testIsSuccessItReturnsTrueWhenSuccess()
   {
     $responseBody =
       'foo=bar&a=b&c=d&CODEREPONSE=' . DirectResponseCode::SUCCESS;
-    $response = m::mock(Capture::class, [$responseBody])->makePartial();
+    $response = Mockery::mock(Capture::class, [$responseBody])->makePartial();
+    /** @var Capture $response */
     $this->assertTrue($response->isSuccess());
   }
 
-  /** @test */
-  public function isSuccess_it_returns_false_when_fail()
+  /**
+   * Test isSuccess it returns false when fail
+   */
+  public function testIsSuccessItReturnsFalseWhenFail()
   {
     $responseBody =
       'foo=bar&a=b&c=d&CODEREPONSE=' . DirectResponseCode::CONNECTION_FAILED;
-    $response = m::mock(Capture::class, [$responseBody])->makePartial();
+    $response = Mockery::mock(Capture::class, [$responseBody])->makePartial();
+    /** @var Capture $response */
     $this->assertFalse($response->isSuccess());
   }
 
-  /** @test */
-  public function shouldBeRepeated_it_returns_false_when_success()
+  /**
+   * Test shouldBeRepeated return false when success
+   */
+  public function testShouldBeRepeatedItReturnsFalseWhenSuccess()
   {
     $responseBody =
       'foo=bar&a=b&c=d&CODEREPONSE=' . DirectResponseCode::SUCCESS;
-    $response = m::mock(Capture::class, [$responseBody])->makePartial();
+    $response = Mockery::mock(Capture::class, [$responseBody])->makePartial();
+    /** @var Capture $response */
     $this->assertFalse($response->shouldBeRepeated());
   }
 
-  /** @test */
-  public function shouldBeRepeated_it_returns_false_when_other_error()
+  /**
+   * Test shouldBeRepeated return false when other error
+   */
+  public function testShouldBeRepeatedItReturnsFalseWhenOtherError()
   {
     $responseBody =
       'foo=bar&a=b&c=d&CODEREPONSE=' . DirectResponseCode::INCOHERENCE_ERROR;
-    $response = m::mock(
-      \Bnb\PayboxGateway\Responses\PayboxDirect\Capture::class,
+    $response = Mockery::mock(
+      Capture::class,
       [$responseBody]
     )->makePartial();
+    /** @var Capture $response */
     $this->assertFalse($response->shouldBeRepeated());
   }
 
-  /** @test */
-  public function shouldBeRepeated_it_returns_true_when_connection_failed()
+  /**
+   * Test shouldBeRepeated return false when connection failed
+   */
+  public function testShouldBeRepeatedItReturnsTrueWhenConnectionFailed()
   {
     $responseBody =
       'foo=bar&a=b&c=d&CODEREPONSE=' . DirectResponseCode::CONNECTION_FAILED;
-    $response = m::mock(Capture::class, [$responseBody])->makePartial();
+    $response = Mockery::mock(Capture::class, [$responseBody])->makePartial();
+    /** @var Capture $response */
     $this->assertTrue($response->shouldBeRepeated());
   }
 
-  /** @test */
-  public function shouldBeRepeated_it_returns_true_when_timeout()
+  /**
+   * Test shouldBeRepeated return true when connection timeout
+   */
+  public function shouldBeRepeatedItReturnsTrueWhenTimeout()
   {
     $responseBody =
       'foo=bar&a=b&c=d&CODEREPONSE=' . DirectResponseCode::TIMEOUT;
-    $response = m::mock(Capture::class, [$responseBody])->makePartial();
+    $response = Mockery::mock(Capture::class, [$responseBody])->makePartial();
+    /** @var Capture $response */
     $this->assertTrue($response->shouldBeRepeated());
   }
 
-  /** @test */
-  public function shouldBeRepeated_it_returns_true_when_internal_timeout()
+  /**
+   * Test shouldBeRepeated return true when internal timeout
+   */
+  public function shouldBeRepeatedItReturnsTrueWhenInternalTimeout()
   {
     $responseBody =
       'foo=bar&a=b&c=d&CODEREPONSE=' . DirectResponseCode::INTERNAL_TIMEOUT;
-    $response = m::mock(Capture::class, [$responseBody])->makePartial();
+    $response = Mockery::mock(Capture::class, [$responseBody])->makePartial();
+    /** @var Capture $response */
     $this->assertTrue($response->shouldBeRepeated());
   }
 
-  /** @test */
-  public function getResponseCode_it_returns_valid_response_code()
+  /**
+   * Test getResponseCode return valid response code
+   */
+  public function testGetResponseCodeItReturnsValidResponseCode()
   {
     $responseBody =
       'foo=bar&a=b&c=d&CODEREPONSE=' . DirectResponseCode::INCOHERENCE_ERROR;
-    $response = m::mock(Capture::class, [$responseBody])->makePartial();
+    $response = Mockery::mock(Capture::class, [$responseBody])->makePartial();
+    /** @var Capture $response */
     $this->assertSame(
       DirectResponseCode::INCOHERENCE_ERROR,
       $response->getResponseCode()

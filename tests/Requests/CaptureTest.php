@@ -3,49 +3,27 @@
 namespace Tests\Requests;
 
 use Bnb\PayboxGateway\Currency;
-use Bnb\PayboxGateway\HttpClient\GuzzleHttpClient;
 use Bnb\PayboxGateway\Responses\PayboxDirect\Capture as CaptureResponse;
-use Bnb\PayboxGateway\Services\Amount;
-use Bnb\PayboxGateway\Services\HmacHashGenerator;
-use Bnb\PayboxGateway\Services\ServerSelector;
 use Carbon\Carbon;
-use Exception;
-use Illuminate\Contracts\Config\Repository as Config;
-use Mockery as m;
+use Tests\Helpers\Direct as DirectHelper;
 use Tests\UnitTestCase;
 
+/**
+ * Class CaptureTest
+ * @package Tests\Requests
+ * @group CaptureRequestTest
+ */
 class CaptureTest extends UnitTestCase
 {
-  protected $serverSelector;
+  use DirectHelper;
 
-  protected $config;
-
-  protected $request;
-
-  protected $amountService;
-
-  protected $client;
-
+  /**
+   * Setup mocks
+   */
   public function setUp(): void
   {
     parent::setUp();
-    $this->serverSelector = m::mock(ServerSelector::class);
-    $this->config = m::mock(Config::class);
-    $this->hash = m::mock(HmacHashGenerator::class);
-    $this->amountService = m::mock(Amount::class);
-    $this->client = m::mock(GuzzleHttpClient::class);
-    $this->request = m::mock(
-      \Bnb\PayboxGateway\Requests\PayboxDirect\Capture::class,
-      [
-        $this->serverSelector,
-        $this->config,
-        $this->hash,
-        $this->amountService,
-        $this->client,
-      ]
-    )
-      ->makePartial()
-      ->shouldAllowMockingProtectedMethods();
+    $this->setUpMocks(\Bnb\PayboxGateway\Requests\PayboxDirect\Capture::class);
   }
 
   /** @test */
@@ -122,49 +100,6 @@ class CaptureTest extends UnitTestCase
     $this->request->setTime($date);
     $parameters = $this->request->getParameters();
     $this->assertSame($date->format('dmYHis'), $parameters['DATEQ']);
-  }
-
-  /** @test */
-  public function setDayRequestNumber_it_throws_exception_when_number_is_not_integer()
-  {
-    $this->ignoreMissingMethods();
-
-    $this->expectException(Exception::class);
-    $this->expectExceptionMessage('Number of request should be integer');
-    $this->request->setDayRequestNumber('123');
-  }
-
-  /** @test */
-  public function setDayRequestNumber_it_throws_exception_when_number_is_too_low()
-  {
-    $this->ignoreMissingMethods();
-
-    $this->expectException(Exception::class);
-    $this->expectExceptionMessage(
-      'umber of request should in range <1,2147483647>'
-    );
-    $this->request->setDayRequestNumber(0);
-  }
-
-  /** @test */
-  public function setDayRequestNumber_it_throws_exception_when_number_is_too_high()
-  {
-    $this->ignoreMissingMethods();
-
-    $this->expectException(Exception::class);
-    $this->expectExceptionMessage(
-      'umber of request should in range <1,2147483647>'
-    );
-    $this->request->setDayRequestNumber(2147483647 + 1);
-  }
-
-  /** @test */
-  public function setDayRequestNumber_it_sets_valid_request_number()
-  {
-    $this->ignoreMissingMethods();
-    $this->request->setDayRequestNumber(51234);
-    $parameters = $this->request->getParameters();
-    $this->assertSame('0000051234', $parameters['NUMQUESTION']);
   }
 
   /** @test */

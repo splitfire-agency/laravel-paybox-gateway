@@ -6,15 +6,22 @@ use Bnb\PayboxGateway\Services\HmacHashGenerator;
 use Illuminate\Config\Repository as Config;
 use Illuminate\Contracts\Foundation\Application;
 use Tests\UnitTestCase;
-use Mockery as m;
+use Mockery;
 
+/**
+ * Class HmacHashGeneratorTest
+ * @package Tests\Services
+ * @group HmacHashGeneratorTest
+ */
 class HmacHashGeneratorTest extends UnitTestCase
 {
-  /** @test */
-  public function it_gets_valid_hmac_hash_for_multiple_params()
+  /**
+   * Test valid hmac hash for multiple params
+   */
+  public function testValidHmacHashForMultipleParams()
   {
-    $app = m::mock(Application::class)->makePartial();
-    $config = m::mock(Config::class);
+    $app = Mockery::mock(Application::class)->makePartial();
+    $config = Mockery::mock(Config::class);
 
     $app
       ->shouldReceive('make')
@@ -22,6 +29,7 @@ class HmacHashGeneratorTest extends UnitTestCase
       ->once()
       ->andReturn($config);
 
+    /** @var Application $app */
     $generator = new HmacHashGenerator($app);
 
     $params = [

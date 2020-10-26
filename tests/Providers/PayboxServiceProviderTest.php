@@ -4,21 +4,28 @@ namespace Tests\Providers;
 
 use Bnb\PayboxGateway\Providers\PayboxServiceProvider;
 use Illuminate\Foundation\Application;
-use Mockery as m;
+use Mockery;
 use Tests\UnitTestCase;
 
+/**
+ * Class PayboxServiceProviderTest
+ * @package Tests\Providers
+ * @group PayboxServiceProviderTest
+ */
 class PayboxServiceProviderTest extends UnitTestCase
 {
-  /** @test */
-  public function it_does_all_required_actions_when_registering()
+  /**
+   *
+   */
+  public function testDoesAllRequiredActionsWhenRegistering()
   {
-    $app = m::mock(Application::class);
+    $app = Mockery::mock(Application::class);
 
     $moduleConfigFile = realpath(__DIR__ . '/../../config/paybox.php');
     $configPath = 'dummy/config/path';
     $basePath = 'dummy/base/path';
 
-    $payboxProvider = m::mock(PayboxServiceProvider::class, [$app])
+    $payboxProvider = Mockery::mock(PayboxServiceProvider::class, [$app])
       ->makePartial()
       ->shouldAllowMockingProtectedMethods();
 

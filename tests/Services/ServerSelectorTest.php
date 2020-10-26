@@ -8,20 +8,28 @@ use Exception;
 use Illuminate\Config\Repository as Config;
 use stdClass;
 use Tests\UnitTestCase;
-use Mockery as m;
+use Mockery;
 
+/**
+ * Class ServerSelectorTest
+ * @package Tests\Services
+ * @group ServerSelectorTest
+ */
 class ServerSelectorTest extends UnitTestCase
 {
-  /** @test */
-  public function find_it_returns_valid_server_for_paybox_when_test_is_on_and_1st_server_is_fine()
+  /**
+   * Test find paybox server when test is on and 1st server is fine
+   * @throws Exception
+   */
+  public function testFindValidServerForPayboxWhenTestIsOnAnd1stServerIsFine()
   {
-    $config = m::mock(Config::class);
-    $serverSelector = m::mock(ServerSelector::class, [$config])
+    $config = Mockery::mock(Config::class);
+    $serverSelector = Mockery::mock(ServerSelector::class, [$config])
       ->makePartial()
       ->shouldAllowMockingProtectedMethods();
 
-    $dom = m::mock(DOMDocument::class)->makePartial();
-    $domElement = m::mock(stdClass::class);
+    $dom = Mockery::mock(DOMDocument::class)->makePartial();
+    $domElement = Mockery::mock(stdClass::class);
 
     $urls = [
       'https://example.com/paybox-payment-url',
@@ -50,21 +58,25 @@ class ServerSelectorTest extends UnitTestCase
     $domElement->textContent = 'OK';
     $dom->shouldReceive('getElementById')->andReturn($domElement);
 
+    /** @var ServerSelector $serverSelector */
     $result = $serverSelector->find('paybox');
 
     $this->assertSame($urls[0], $result);
   }
 
-  /** @test */
-  public function find_it_returns_valid_server_for_paybox_when_test_is_off_and_1st_server_is_fine()
+  /**
+   * Test return valid server when test is on and 1st server is fine
+   * @throws Exception
+   */
+  public function testReturnValidServerForPayboxWhenTestIsOffAnd1stServerIsFine()
   {
-    $config = m::mock(Config::class);
-    $serverSelector = m::mock(ServerSelector::class, [$config])
+    $config = Mockery::mock(Config::class);
+    $serverSelector = Mockery::mock(ServerSelector::class, [$config])
       ->makePartial()
       ->shouldAllowMockingProtectedMethods();
 
-    $dom = m::mock(DOMDocument::class)->makePartial();
-    $domElement = m::mock(stdClass::class);
+    $dom = Mockery::mock(DOMDocument::class)->makePartial();
+    $domElement = Mockery::mock(stdClass::class);
 
     $urls = [
       'https://example.com/paybox-payment-url',
@@ -93,24 +105,28 @@ class ServerSelectorTest extends UnitTestCase
     $domElement->textContent = 'OK';
     $dom->shouldReceive('getElementById')->andReturn($domElement);
 
+    /** @var ServerSelector $serverSelector */
     $result = $serverSelector->find('paybox');
 
     $this->assertSame($urls[0], $result);
   }
 
-  /** @test */
-  public function find_it_returns_valid_server_for_paybox_when_test_is_off_and_1st_server_is_down()
+  /**
+   * Test find valid server when test is off and 1st server is down
+   * @throws Exception
+   */
+  public function testFindValidServerForPayboxWhenTestIsOffAnd1stServerIsDown()
   {
-    $config = m::mock(Config::class);
-    $serverSelector = m::mock(ServerSelector::class, [$config])
+    $config = Mockery::mock(Config::class);
+    $serverSelector = Mockery::mock(ServerSelector::class, [$config])
       ->makePartial()
       ->shouldAllowMockingProtectedMethods();
 
-    $dom = m::mock(DOMDocument::class)->makePartial();
-    $domElement = m::mock(stdClass::class);
+    $dom = Mockery::mock(DOMDocument::class)->makePartial();
+    $domElement = Mockery::mock(stdClass::class);
 
-    $dom2 = m::mock(DOMDocument::class)->makePartial();
-    $domElement2 = m::mock(stdClass::class);
+    $dom2 = Mockery::mock(DOMDocument::class)->makePartial();
+    $domElement2 = Mockery::mock(stdClass::class);
 
     $urls = [
       'https://example.com/paybox-payment-url',
@@ -150,24 +166,27 @@ class ServerSelectorTest extends UnitTestCase
     $domElement2->textContent = 'OK';
     $dom2->shouldReceive('getElementById')->andReturn($domElement2);
 
+    /** @var ServerSelector $serverSelector */
     $result = $serverSelector->find('paybox');
 
     $this->assertSame($urls[1], $result);
   }
 
-  /** @test */
-  public function find_it_throws_exception_when_test_is_off_and_all_servers_are_down()
+  /**
+   * Test throw exception when test is off and all servers are down
+   */
+  public function testThrowsExceptionWhenTestIsOffAndAllServersAreDown()
   {
-    $config = m::mock(Config::class);
-    $serverSelector = m::mock(ServerSelector::class, [$config])
+    $config = Mockery::mock(Config::class);
+    $serverSelector = Mockery::mock(ServerSelector::class, [$config])
       ->makePartial()
       ->shouldAllowMockingProtectedMethods();
 
-    $dom = m::mock(DOMDocument::class)->makePartial();
-    $domElement = m::mock(stdClass::class);
+    $dom = Mockery::mock(DOMDocument::class)->makePartial();
+    $domElement = Mockery::mock(stdClass::class);
 
-    $dom2 = m::mock(DOMDocument::class)->makePartial();
-    $domElement2 = m::mock(stdClass::class);
+    $dom2 = Mockery::mock(DOMDocument::class)->makePartial();
+    $domElement2 = Mockery::mock(stdClass::class);
 
     $urls = [
       'https://example.com/paybox-payment-url',
@@ -210,14 +229,17 @@ class ServerSelectorTest extends UnitTestCase
     $this->expectException(Exception::class);
     $this->expectExceptionMessage('No servers set or all servers are down');
 
+    /** @var ServerSelector $serverSelector */
     $serverSelector->find('paybox');
   }
 
-  /** @test */
-  public function find_it_throws_exception_when_server_contains_only_protocol()
+  /**
+   * Test throw exception when server contains only protocol
+   */
+  public function testThrowsExceptionWhenServerContainsOnlyProtocol()
   {
-    $config = m::mock(Config::class);
-    $serverSelector = m::mock(ServerSelector::class, [$config])
+    $config = Mockery::mock(Config::class);
+    $serverSelector = Mockery::mock(ServerSelector::class, [$config])
       ->makePartial()
       ->shouldAllowMockingProtectedMethods();
 
@@ -237,14 +259,17 @@ class ServerSelectorTest extends UnitTestCase
     $this->expectException(Exception::class);
     $this->expectExceptionMessage('Url http:// is invalid');
 
+    /** @var ServerSelector $serverSelector */
     $serverSelector->find('paybox');
   }
 
-  /** @test */
-  public function find_it_throws_exception_when_server_contains_only_path_without_host()
+  /**
+   * Test throw exception when server contains only path without host
+   */
+  public function testThrowsExceptionWhenServerContainsOnlyPathWithoutHost()
   {
-    $config = m::mock(Config::class);
-    $serverSelector = m::mock(ServerSelector::class, [$config])
+    $config = Mockery::mock(Config::class);
+    $serverSelector = Mockery::mock(ServerSelector::class, [$config])
       ->makePartial()
       ->shouldAllowMockingProtectedMethods();
 
@@ -264,14 +289,17 @@ class ServerSelectorTest extends UnitTestCase
     $this->expectException(Exception::class);
     $this->expectExceptionMessage('Url sample/path is invalid');
 
+    /** @var ServerSelector $serverSelector */
     $serverSelector->find('paybox');
   }
 
-  /** @test */
-  public function findFrom_it_finds_valid_server_from_given_when_same()
+  /**
+   * Test find valid server from given when same
+   */
+  public function testFindValidServerFromGivenWhenSame()
   {
-    $config = m::mock(Config::class);
-    $serverSelector = m::mock(ServerSelector::class, [$config])
+    $config = Mockery::mock(Config::class);
+    $serverSelector = Mockery::mock(ServerSelector::class, [$config])
       ->makePartial()
       ->shouldAllowMockingProtectedMethods();
 
@@ -301,6 +329,7 @@ class ServerSelectorTest extends UnitTestCase
       ->once()
       ->andReturn($payboxDirectUrls);
 
+    /** @var ServerSelector $serverSelector */
     $url = $serverSelector->findFrom(
       'paybox',
       'paybox_direct',
@@ -310,11 +339,13 @@ class ServerSelectorTest extends UnitTestCase
     $this->assertSame($payboxDirectUrls[0], $url);
   }
 
-  /** @test */
-  public function findFrom_it_finds_valid_server_from_given_when_other()
+  /**
+   * Test find valid server from given when other
+   */
+  public function testFindsValidServerFromGivenWhenOther()
   {
-    $config = m::mock(Config::class);
-    $serverSelector = m::mock(ServerSelector::class, [$config])
+    $config = Mockery::mock(Config::class);
+    $serverSelector = Mockery::mock(ServerSelector::class, [$config])
       ->makePartial()
       ->shouldAllowMockingProtectedMethods();
 
@@ -344,6 +375,7 @@ class ServerSelectorTest extends UnitTestCase
       ->once()
       ->andReturn($payboxDirectUrls);
 
+    /** @var ServerSelector $serverSelector */
     $url = $serverSelector->findFrom(
       'paybox',
       'paybox_direct',
@@ -353,11 +385,13 @@ class ServerSelectorTest extends UnitTestCase
     $this->assertSame($payboxDirectUrls[1], $url);
   }
 
-  /** @test */
-  public function findFrom_it_return_current_url_when_other_url_cannot_be_found()
+  /**
+   * Test return current url when other url cannot be found
+   */
+  public function testReturnCurrentUrlWhenOtherUrlCannotBeFound()
   {
-    $config = m::mock(Config::class);
-    $serverSelector = m::mock(ServerSelector::class, [$config])
+    $config = Mockery::mock(Config::class);
+    $serverSelector = Mockery::mock(ServerSelector::class, [$config])
       ->makePartial()
       ->shouldAllowMockingProtectedMethods();
 
@@ -384,6 +418,7 @@ class ServerSelectorTest extends UnitTestCase
       ->once()
       ->andReturn($payboxDirectUrls);
 
+    /** @var ServerSelector $serverSelector */
     $url = $serverSelector->findFrom(
       'paybox',
       'paybox_direct',

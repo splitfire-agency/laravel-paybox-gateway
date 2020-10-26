@@ -8,18 +8,28 @@ use Bnb\PayboxGateway\Language;
 use Tests\Helpers\Authorization as AuthorizationHelper;
 use Tests\UnitTestCase;
 
+/**
+ * Class AuthorizationTest
+ * @package Tests\Requests
+ * @group AuthorizationRequestTest
+ */
 class AuthorizationTest extends UnitTestCase
 {
   use AuthorizationHelper;
 
+  /**
+   * Setup mocks
+   */
   public function setUp(): void
   {
     parent::setUp();
     $this->setUpMocks();
   }
 
-  /** @test */
-  public function getParameters_it_returns_all_parameters()
+  /**
+   * Test getParameters return all parameters
+   */
+  public function testGetParametersItReturnsAllParameters()
   {
     $sampleParameters = ['a' => 'b', 'c' => 'd', 'e' => 'f'];
     $sampleHmac = 'sampleHmacHash';
@@ -44,8 +54,10 @@ class AuthorizationTest extends UnitTestCase
     );
   }
 
-  /** @test */
-  public function getParameters_it_returns_valid_parameters()
+  /**
+   * Test getParameters return valid parameters
+   */
+  public function testGetParametersItReturnsValidParameters()
   {
     $sampleHmac = 'sampleHmacHash';
 
@@ -174,8 +186,10 @@ class AuthorizationTest extends UnitTestCase
     $this->assertSame($sampleHmac, $parameters['PBX_HMAC']);
   }
 
-  /** @test */
-  public function setAmount_it_gets_valid_amount_and_currency_when_both_given()
+  /**
+   * Test setAmount get valid amount and currency when both given
+   */
+  public function getSetAmountItGetsValidAmountAndCurrencyWhenBothGiven()
   {
     $this->ignoreMissingMethods();
     $this->amountService
@@ -189,8 +203,10 @@ class AuthorizationTest extends UnitTestCase
     $this->assertSame(Currency::CHF, $parameters['PBX_DEVISE']);
   }
 
-  /** @test */
-  public function setAmount_it_gets_valid_amount_and_currency_when_no_currency()
+  /**
+   * Test setAmount get valid amount and currency when no currency given
+   */
+  public function testSetAmountItGetsValidAmountAndCurrencyWhenNoCurrency()
   {
     $this->ignoreMissingMethods();
     $this->amountService
@@ -204,8 +220,10 @@ class AuthorizationTest extends UnitTestCase
     $this->assertSame(Currency::EUR, $parameters['PBX_DEVISE']);
   }
 
-  /** @test */
-  public function setLanguage_it_gets_valid_language_when_language_was_set()
+  /**
+   * Test setLanguage get valid language when language set
+   */
+  public function testSetLanguageItGetsValidLanguageWhenLanguageWasSet()
   {
     $this->ignoreMissingMethods();
     $this->request->setLanguage(Language::DUTCH);
@@ -213,16 +231,20 @@ class AuthorizationTest extends UnitTestCase
     $this->assertSame(Language::DUTCH, $parameters['PBX_LANGUE']);
   }
 
-  /** @test */
-  public function setLanguage_it_gets_valid_language_when_language_was_not_set()
+  /**
+   * Test setLanguage get valid language when language is not set
+   */
+  public function testSetLanguageItGetsValidLanguageWhenLanguageWasNotSet()
   {
     $this->ignoreMissingMethods();
     $parameters = $this->request->getParameters();
     $this->assertSame(Language::FRENCH, $parameters['PBX_LANGUE']);
   }
 
-  /** @test */
-  public function setCustomerEmail_it_gets_valid_customer_email_when_set()
+  /**
+   * Test setCustomerEmail get valid customer email when email is set
+   */
+  public function testSetCustomerEmailItGetsValidCustomerEmailWhenSet()
   {
     $this->ignoreMissingMethods();
     $this->request->setCustomerEmail('foo-bar@example.com');
@@ -230,8 +252,10 @@ class AuthorizationTest extends UnitTestCase
     $this->assertSame('foo-bar@example.com', $parameters['PBX_PORTEUR']);
   }
 
-  /** @test */
-  public function setTime_it_gets_valid_date_time_when_set()
+  /**
+   * Test setTime get valid datetime when set
+   */
+  public function testSetTimeItGetsValidDateTimeWhenSet()
   {
     $this->ignoreMissingMethods();
     $date = Carbon::now()->addDays(10);
@@ -240,8 +264,10 @@ class AuthorizationTest extends UnitTestCase
     $this->assertSame($date->format('c'), $parameters['PBX_TIME']);
   }
 
-  /** @test */
-  public function setTime_it_gets_valid_date_time_when_not_set()
+  /**
+   * Test setTime get valid datetime when set
+   */
+  public function testSetTimeItGetsValidDateTimeWhenNotSet()
   {
     $this->ignoreMissingMethods();
     $parameters = $this->request->getParameters();
@@ -250,8 +276,10 @@ class AuthorizationTest extends UnitTestCase
     $this->assertSame($now->format('c'), $parameters['PBX_TIME']);
   }
 
-  /** @test */
-  public function setPaymentNumber_it_gets_valid_payment_number()
+  /**
+   * Test setPaymentNumber get valid payment number
+   */
+  public function testSetPaymentNumberItGetsValidPaymentNumber()
   {
     $this->ignoreMissingMethods();
     $this->request->setPaymentNumber(123);
@@ -259,8 +287,10 @@ class AuthorizationTest extends UnitTestCase
     $this->assertSame(123, $parameters['PBX_CMD']);
   }
 
-  /** @test */
-  public function setReturnFields_it_gets_valid_return_fields()
+  /**
+   * Test setReturnFields get valid fields
+   */
+  public function testSetReturnFieldsItGetsValidReturnFields()
   {
     $this->ignoreMissingMethods();
     $fields = ['a' => 'b', 'c' => 'de', 'f' => 'g'];
@@ -269,8 +299,10 @@ class AuthorizationTest extends UnitTestCase
     $this->assertSame('a:b;c:de;f:g', $parameters['PBX_RETOUR']);
   }
 
-  /** @test */
-  public function setCustomerPaymentAcceptedUrl_it_gets_valid_accepted_url()
+  /**
+   * Test setCustomerPaymentAcceptedUrl get valid url
+   */
+  public function testSetCustomerPaymentAcceptedUrlItGetsValidAcceptedUrl()
   {
     $this->ignoreMissingMethods();
     $sampleUrl = 'https://example.com/accepted-url';
@@ -279,7 +311,9 @@ class AuthorizationTest extends UnitTestCase
     $this->assertSame($sampleUrl, $parameters['PBX_EFFECTUE']);
   }
 
-  /** @test */
+  /**
+   * Test setCustomerPaymentRefusedUrl get valid url
+   */
   public function setCustomerPaymentRefusedUrl_it_gets_valid_refused_url()
   {
     $this->ignoreMissingMethods();
@@ -289,8 +323,10 @@ class AuthorizationTest extends UnitTestCase
     $this->assertSame($sampleUrl, $parameters['PBX_REFUSE']);
   }
 
-  /** @test */
-  public function setCustomerPaymentAbortedUrl_it_gets_valid_aborted_url()
+  /**
+   * Test setCustomerPaymentAbortedUrl get valid url
+   */
+  public function testSetCustomerPaymentAbortedUrlItGetsValidAbortedUrl()
   {
     $this->ignoreMissingMethods();
     $sampleUrl = 'https://example.com/aborted-url';
@@ -299,8 +335,10 @@ class AuthorizationTest extends UnitTestCase
     $this->assertSame($sampleUrl, $parameters['PBX_ANNULE']);
   }
 
-  /** @test */
-  public function setCustomerPaymentWaitingUrl_it_gets_valid_waiting_url()
+  /**
+   * Test setCustomerPaymentWaitingUrl get valid url
+   */
+  public function testSetCustomerPaymentWaitingUrlItGetsValidWaitingUrl()
   {
     $this->ignoreMissingMethods();
     $sampleUrl = 'https://example.com/waiting-url';
@@ -309,8 +347,10 @@ class AuthorizationTest extends UnitTestCase
     $this->assertSame($sampleUrl, $parameters['PBX_ATTENTE']);
   }
 
-  /** @test */
-  public function setTransactionVerifyUrl_it_gets_valid_transaction_url_when_set()
+  /**
+   * Test setTransactionVerifyUrl get valid transaction url
+   */
+  public function testSetTransactionVerifyUrlItgetsValidTransactionUrlWhenSet()
   {
     $this->ignoreMissingMethods();
     $sampleUrl = 'https://example.com/transaction-url';
@@ -319,8 +359,10 @@ class AuthorizationTest extends UnitTestCase
     $this->assertSame($sampleUrl, $parameters['PBX_REPONDRE_A']);
   }
 
-  /** @test */
-  public function getUrl_it_fires_server_selector_once()
+  /**
+   * Test getUrl with server selection
+   */
+  public function testGetUrlItFiresServerSelectorOnce()
   {
     $validUrl = 'https://sample.com/valid/server/url';
 
@@ -336,67 +378,5 @@ class AuthorizationTest extends UnitTestCase
     // now launch again - server should not be searched one more time but result should be same
     $url = $this->request->getUrl();
     $this->assertSame($validUrl, $url);
-  }
-
-  /** @test */
-  public function send_it_generates_view_with_valid_parameters_when_no_parameters_given()
-  {
-    $parameters = [
-      'a' => 'b',
-      'c' => 'd',
-    ];
-    $sampleUrl = 'https://example.com';
-
-    $viewName = 'sample.view';
-
-    $this->request
-      ->shouldReceive('getParameters')
-      ->withNoArgs()
-      ->once()
-      ->andReturn($parameters);
-    $this->request
-      ->shouldReceive('getUrl')
-      ->withNoArgs()
-      ->once()
-      ->andReturn($sampleUrl);
-
-    $this->view
-      ->shouldReceive('make')
-      ->with($viewName, [
-        'parameters' => $parameters,
-        'url' => $sampleUrl,
-      ])
-      ->once();
-
-    $this->request->send($viewName);
-  }
-
-  /** @test */
-  public function send_it_generates_view_with_valid_parameters_when_parameters_given()
-  {
-    $parameters = [
-      'a' => 'b',
-      'c' => 'd',
-    ];
-    $sampleUrl = 'https://example.com';
-
-    $viewName = 'sample.view';
-
-    $this->request->shouldNotReceive('getParameters');
-    $this->request
-      ->shouldReceive('getUrl')
-      ->withNoArgs()
-      ->once()
-      ->andReturn($sampleUrl);
-
-    $this->view
-      ->shouldReceive('make')
-      ->with($viewName, [
-        'parameters' => $parameters,
-        'url' => $sampleUrl,
-      ])
-      ->once();
-
-    $this->request->send($viewName, $parameters);
   }
 }

@@ -8,10 +8,17 @@ use Mockery as m;
 use Illuminate\Config\Repository as Config;
 use Illuminate\Filesystem\Filesystem;
 
+/**
+ * Class SignatureVerifierTest
+ * @package Tests\Services
+ * @group SignatureVerifierTest
+ */
 class SignatureVerifierTest extends UnitTestCase
 {
-  /** @test */
-  public function it_returns_1_when_signature_is_correct()
+  /**
+   * Test return one when signature is correct
+   */
+  public function testReturnsOneWhenSignatureIsCorrect()
   {
     $config = m::mock(Config::class);
     $files = new Filesystem();
@@ -36,6 +43,7 @@ class SignatureVerifierTest extends UnitTestCase
       ->once()
       ->andReturn(realpath(__DIR__ . '/../keys/pubkey.pem'));
 
+    /** @var SignatureVerifier $signatureVerifier */
     $result = $signatureVerifier->isCorrect(
       base64_encode($signature),
       $parameters
@@ -44,14 +52,15 @@ class SignatureVerifierTest extends UnitTestCase
     $this->assertSame(1, $result);
   }
 
-  /** @test */
-  public function it_returns_0_when_signature_is_incorrect()
+  /**
+   * Test return zero when signature is incorrect
+   */
+  public function testReturnsZeroWhenSignatureIsIncorrect()
   {
     $config = m::mock(Config::class);
     $files = new Filesystem();
 
     $parameters = ['a' => 'b', 'c' => 'd', 'e' => 'fg'];
-    $data = 'a=b&c=d&e=fg';
 
     $signature = 'sample invalid signature';
 
@@ -66,6 +75,7 @@ class SignatureVerifierTest extends UnitTestCase
       ->once()
       ->andReturn(realpath(__DIR__ . '/../keys/pubkey.pem'));
 
+    /** @var SignatureVerifier $signatureVerifier */
     $result = $signatureVerifier->isCorrect(
       base64_encode($signature),
       $parameters

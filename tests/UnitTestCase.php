@@ -2,13 +2,20 @@
 
 namespace Tests;
 
-use Mockery as m;
-use PHPUnit_Framework_TestCase;
+use Mockery;
+use PHPUnit\Framework\TestCase;
 
-class UnitTestCase extends PHPUnit_Framework_TestCase
+/**
+ * Class UnitTestCase
+ * @package Tests
+ */
+class UnitTestCase extends TestCase
 {
+  /**
+   * Close Mockery on tear down
+   */
   public function tearDown(): void
   {
-    m::close();
+    Mockery::close();
   }
 }

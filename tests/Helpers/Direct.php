@@ -2,22 +2,22 @@
 
 namespace Tests\Helpers;
 
-use Bnb\PayboxGateway\Requests\Paybox\AuthorizationWithCapture;
+use Bnb\PayboxGateway\Requests\PayboxDirect\DirectRequest;
 use Bnb\PayboxGateway\Requests\Request;
 use Bnb\PayboxGateway\Services\Amount;
 use Bnb\PayboxGateway\Services\HmacHashGenerator;
 use Bnb\PayboxGateway\Services\ServerSelector;
 use Illuminate\Contracts\Config\Repository as Config;
-use Illuminate\Contracts\Routing\UrlGenerator;
 use Mockery;
 use Mockery\LegacyMockInterface;
 use Mockery\MockInterface;
+use Bnb\PayboxGateway\HttpClient\GuzzleHttpClient;
 
 /**
- * Trait Authorization
+ * Trait Direct
  * @package Tests\Helpers
  */
-trait Authorization
+trait Direct
 {
   /**
    * @var ServerSelector|LegacyMockInterface|MockInterface
@@ -35,11 +35,6 @@ trait Authorization
   protected HmacHashGenerator $hmacHashGenerator;
 
   /**
-   * @var UrlGenerator|LegacyMockInterface|MockInterface
-   */
-  protected UrlGenerator $urlGenerator;
-
-  /**
    * @var Request|Mockery\Mock
    */
   protected $request;
@@ -50,22 +45,27 @@ trait Authorization
   protected Amount $amountService;
 
   /**
-   * Set up mocks
-   * @param string $class Request class
+   * @var GuzzleHttpClient|LegacyMockInterface|MockInterface
    */
-  protected function setUpMocks($class = AuthorizationWithCapture::class)
+  protected GuzzleHttpClient $client;
+
+  /**
+   * Set up mocks
+   * @param string $class Direct Request class
+   */
+  protected function setUpMocks($class = DirectRequest::class)
   {
     $this->serverSelector = Mockery::mock(ServerSelector::class);
     $this->config = Mockery::mock(Config::class);
     $this->hmacHashGenerator = Mockery::mock(HmacHashGenerator::class);
-    $this->urlGenerator = Mockery::mock(UrlGenerator::class);
     $this->amountService = Mockery::mock(Amount::class);
+    $this->client = Mockery::mock(GuzzleHttpClient::class);
     $this->request = Mockery::mock($class, [
       $this->serverSelector,
       $this->config,
       $this->hmacHashGenerator,
-      $this->urlGenerator,
       $this->amountService,
+      $this->client
     ])
       ->makePartial()
       ->shouldAllowMockingProtectedMethods();
@@ -77,7 +77,7 @@ trait Authorization
   protected function ignoreMissingMethods()
   {
     $this->config->shouldIgnoreMissing();
-    $this->urlGenerator->shouldIgnoreMissing();
+    $this->client->shouldIgnoreMissing();
     $this->hmacHashGenerator->shouldIgnoreMissing();
     $this->amountService->shouldIgnoreMissing();
   }

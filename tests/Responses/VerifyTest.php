@@ -8,24 +8,47 @@ use Bnb\PayboxGateway\Responses\Exceptions\InvalidSignature;
 use Bnb\PayboxGateway\Responses\Paybox\Verify;
 use Bnb\PayboxGateway\Services\Amount;
 use Bnb\PayboxGateway\Services\SignatureVerifier;
+use Exception;
 use Illuminate\Http\Request;
-use Mockery as m;
+use Mockery;
+use Mockery\LegacyMockInterface;
+use Mockery\MockInterface;
 use Tests\UnitTestCase;
 
+/**
+ * Class VerifyTest
+ * @package Tests\Responses
+ * @group VerifyResponseTest
+ */
 class VerifyTest extends UnitTestCase
 {
-  protected $request;
-  protected $signatureVerifier;
-  protected $amountService;
+  /**
+   * @var Request|LegacyMockInterface|MockInterface
+   */
+  protected Request $request;
+  /**
+   * @var SignatureVerifier|LegacyMockInterface|MockInterface
+   */
+  protected SignatureVerifier $signatureVerifier;
+  /**
+   * @var Amount|LegacyMockInterface|MockInterface
+   */
+  protected Amount $amountService;
+  /**
+   * @var Verify|Mockery\Mock
+   */
   protected $verify;
 
+  /**
+   * Setup mocks
+   */
   public function setUp(): void
   {
     parent::setUp();
-    $this->request = m::mock(Request::class);
-    $this->signatureVerifier = m::mock(SignatureVerifier::class);
-    $this->amountService = m::mock(Amount::class);
-    $this->verify = m::mock(Verify::class, [
+    $this->request = Mockery::mock(Request::class);
+    $this->signatureVerifier = Mockery::mock(SignatureVerifier::class);
+    $this->amountService = Mockery::mock(Amount::class);
+    $this->verify = Mockery::mock(Verify::class, [
       $this->request,
       $this->signatureVerifier,
       $this->amountService,
@@ -34,8 +57,10 @@ class VerifyTest extends UnitTestCase
       ->shouldAllowMockingProtectedMethods();
   }
 
-  /** @test */
-  public function isSuccess_it_throws_exception_when_signature_is_invalid()
+  /**
+   * Test isSuccess throws exception when signature is invalid
+   */
+  public function testIsSuccessItThrowsExceptionWhenSignatureIsInvalid()
   {
     $amount = 23.32;
     $parameters = ['a' => 'b', 'c' => 'd', 'e' => 'f'];
@@ -66,8 +91,10 @@ class VerifyTest extends UnitTestCase
     $this->verify->isSuccess($amount);
   }
 
-  /** @test */
-  public function isSuccess_it_returns_true_when_all_conditions_are_met()
+  /**
+   * Test isSuccess it returns true when all conditions are met
+   */
+  public function testIsSuccessItReturnsTrueWhenAllConditionsAreMet()
   {
     $amount = 23.32;
     $expectedAmount = 2332;
@@ -102,8 +129,10 @@ class VerifyTest extends UnitTestCase
     $this->assertTrue($result);
   }
 
-  /** @test */
-  public function isSuccess_it_returns_false_when_no_authorization_number()
+  /**
+   * Test isSuccess return false when not authorization number
+   */
+  public function testIsSuccessItReturnsFalseWhenNoAuthorizationNumber()
   {
     $amount = 23.32;
 
@@ -121,8 +150,10 @@ class VerifyTest extends UnitTestCase
     $this->assertFalse($result);
   }
 
-  /** @test */
-  public function isSuccess_it_returns_false_when_response_code_is_different()
+  /**
+   * Test isSuccess return false when response code is different
+   */
+  public function testIsSuccessItReturnsFalseWhenResponseCodeIsDifferent()
   {
     $amount = 23.32;
 
@@ -145,8 +176,10 @@ class VerifyTest extends UnitTestCase
     $this->assertFalse($result);
   }
 
-  /** @test */
-  public function isSuccess_it_returns_false_when_invalid_amount_given()
+  /**
+   * Test isSuccess return false when invalid amount given
+   */
+  public function testIsSuccessItReturnsFalseWhenInvalidAmountGiven()
   {
     $amount = 23.32;
     $expectedAmount = 2332;
@@ -181,8 +214,11 @@ class VerifyTest extends UnitTestCase
     $this->assertFalse($result);
   }
 
-  /** @test */
-  public function setParametersMap_it_uses_valid_parameters_when_set()
+  /**
+   * Test setParametersMap uses valid parameters when set
+   * @throws Exception
+   */
+  public function testSetParametersMapItUsesValidParametersWhenSet()
   {
     $amount = 23.32;
     $expectedAmount = 2332;
@@ -242,10 +278,13 @@ class VerifyTest extends UnitTestCase
     $this->assertTrue($result);
   }
 
-  /** @test */
-  public function setParametersMap_it_throws_exception_when_no_amount_field_given()
+  /**
+   * Test setParametersMap throw exception when no amount field given
+   * @throws Exception
+   */
+  public function testSetParametersMapItThrowsExceptionWhenNoAmountFieldGiven()
   {
-    $this->expectException(\Exception::class);
+    $this->expectException(Exception::class);
     $this->expectExceptionMessage('Amount is missing');
 
     $this->verify->setParametersMap([
@@ -255,10 +294,13 @@ class VerifyTest extends UnitTestCase
     ]);
   }
 
-  /** @test */
-  public function setParametersMap_it_throws_exception_when_no_authorization_number_given()
+  /**
+   * Test setParametersMap throw exception when no authorization number given
+   * @throws Exception
+   */
+  public function testSetParametersMapItThrowsExceptionWhenNoAuthorizationNumberGiven()
   {
-    $this->expectException(\Exception::class);
+    $this->expectException(Exception::class);
     $this->expectExceptionMessage('Authorization number is missing');
 
     $this->verify->setParametersMap([
@@ -268,10 +310,13 @@ class VerifyTest extends UnitTestCase
     ]);
   }
 
-  /** @test */
-  public function setParametersMap_it_throws_exception_when_no_response_code_given()
+  /**
+   * Test setParametersMap throw exception when no response code given
+   * @throws Exception
+   */
+  public function testSetParametersMapItThrowsExceptionWhenNoResponseCodeGiven()
   {
-    $this->expectException(\Exception::class);
+    $this->expectException(Exception::class);
     $this->expectExceptionMessage('Response code is missing');
 
     $this->verify->setParametersMap([
@@ -281,10 +326,13 @@ class VerifyTest extends UnitTestCase
     ]);
   }
 
-  /** @test */
-  public function setParametersMap_it_throws_exception_when_no_signature_given()
+  /**
+   * Test setParametersMap throw exception when no signature given
+   * @throws Exception
+   */
+  public function testSetParametersMapItThrowsExceptionWhenNoSignatureGiven()
   {
-    $this->expectException(\Exception::class);
+    $this->expectException(Exception::class);
     $this->expectExceptionMessage('Signature is missing');
 
     $this->verify->setParametersMap([
@@ -294,8 +342,10 @@ class VerifyTest extends UnitTestCase
     ]);
   }
 
-  /** @test */
-  public function getResponseCode_it_gets_valid_response_code()
+  /**
+   * Test getResponseCode get valid response code
+   */
+  public function testGetResponseCodeItGetValidResponseCode()
   {
     $responseCode = 123123;
     $this->request
