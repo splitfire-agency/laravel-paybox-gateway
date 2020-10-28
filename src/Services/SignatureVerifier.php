@@ -3,6 +3,7 @@
 namespace Sf\PayboxGateway\Services;
 
 use Illuminate\Contracts\Config\Repository as Config;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Filesystem\Filesystem;
 
 class SignatureVerifier
@@ -36,13 +37,13 @@ class SignatureVerifier
    * @param array $parameters
    *
    * @return int
+   * @throws FileNotFoundException
    */
-  public function isCorrect($signature, array $parameters)
+  public function isCorrect(string $signature, array $parameters)
   {
     $signature = base64_decode($signature);
 
     $data = $this->getSignedData($parameters);
-
     return openssl_verify($data, $signature, $this->getKey());
   }
 
@@ -50,6 +51,7 @@ class SignatureVerifier
    * Load public key.
    *
    * @return resource
+   * @throws FileNotFoundException
    */
   protected function getKey()
   {
@@ -69,7 +71,7 @@ class SignatureVerifier
   {
     return collect($parameters)
       ->map(function ($value, $key) {
-        return $key . '=' . $value;
+        return $key . '=' . urlencode($value);
       })
       ->implode('&');
   }
