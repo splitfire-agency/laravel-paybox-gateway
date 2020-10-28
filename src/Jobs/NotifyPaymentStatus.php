@@ -30,6 +30,7 @@ class NotifyPaymentStatus implements ShouldQueue
 
   public function __construct(Notification $notification, Config $config)
   {
+    $this->config = $config;
     $queue = $this->config->get('paybox.notifications.queue');
     $this->onConnection($queue['connection']);
     $this->onQueue($queue['queue']);
