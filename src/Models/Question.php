@@ -43,7 +43,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Question extends Model
 {
-  protected $table = 'ppps_questions';
+  protected $table = 'pbx_questions';
 
   protected $fillable = [
     'version',

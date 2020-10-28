@@ -27,7 +27,7 @@ class Notification extends Model
   const STATUS_FAILED = 'failed';
   const STATUS_DONE = 'done';
 
-  protected $table = 'ppps_notifications';
+  protected $table = 'pbx_notifications';
 
   protected $dates = ['notified_at'];
 

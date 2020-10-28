@@ -33,7 +33,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Response extends Model
 {
-  protected $table = 'ppps_responses';
+  protected $table = 'pbx_responses';
 
   protected $fillable = [
     'numquestion',

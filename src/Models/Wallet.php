@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Wallet extends Model
 {
-  protected $table = 'ppps_wallets';
+  protected $table = 'pbx_wallets';
 
   protected $dates = ['card_expiration_date'];
 
