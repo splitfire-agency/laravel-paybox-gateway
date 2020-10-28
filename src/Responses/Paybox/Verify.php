@@ -9,6 +9,7 @@ use Sf\PayboxGateway\Services\Amount;
 use Sf\PayboxGateway\Services\SignatureVerifier;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\Config\Repository as Config;
 
 class Verify
 {
@@ -40,23 +41,45 @@ class Verify
   protected $amountService;
 
   /**
+   * @var Config
+   */
+  protected $config;
+
+  /**
    * Verify constructor.
    *
    * @param Request $request
    * @param SignatureVerifier $signatureVerifier
    * @param Amount $amountService
+   * @param Config $config
    */
   public function __construct(
     Request $request,
     SignatureVerifier $signatureVerifier,
-    Amount $amountService
+    Amount $amountService,
+    Config $config
   ) {
     $this->request = $request;
     $this->signatureVerifier = $signatureVerifier;
     $this->amountService = $amountService;
+    $this->config = $config;
+    $this->initParameters();
   }
 
   /**
+   * Init parameters from config.
+   */
+  protected function initParameters()
+  {
+    $parameters =
+      (array) $this->config->get('paybox.return_fields');
+    foreach($parameters as $key => $value) {
+      $this->parameters[$key] = $value;
+    }
+  }
+
+
+/**
    * Verify whether payment is valid and accepted.
    *
    * @param float $amount

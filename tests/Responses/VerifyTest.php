@@ -2,6 +2,7 @@
 
 namespace Tests\Responses;
 
+use Illuminate\Contracts\Config\Repository as Config;
 use Sf\PayboxGateway\ResponseCode;
 use Sf\PayboxGateway\ResponseField;
 use Sf\PayboxGateway\Responses\Exceptions\InvalidSignature;
@@ -38,6 +39,10 @@ class VerifyTest extends UnitTestCase
    * @var Verify|Mockery\Mock
    */
   protected $verify;
+  /**
+   * @var Config|LegacyMockInterface|MockInterface
+   */
+  protected Config $config;
 
   /**
    * Setup mocks
@@ -48,10 +53,17 @@ class VerifyTest extends UnitTestCase
     $this->request = Mockery::mock(Request::class);
     $this->signatureVerifier = Mockery::mock(SignatureVerifier::class);
     $this->amountService = Mockery::mock(Amount::class);
+    $this->config = Mockery::mock(Config::class);
+    $this->config
+      ->shouldReceive('get')
+      ->with('paybox.return_fields')
+      ->once()
+      ->andReturn([]);
     $this->verify = Mockery::mock(Verify::class, [
       $this->request,
       $this->signatureVerifier,
       $this->amountService,
+      $this->config
     ])
       ->makePartial()
       ->shouldAllowMockingProtectedMethods();
