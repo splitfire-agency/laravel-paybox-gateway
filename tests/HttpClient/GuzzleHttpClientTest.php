@@ -2,6 +2,7 @@
 
 namespace Tests\HttpClient;
 
+use Psr\Http\Message\ResponseInterface;
 use Sf\PayboxGateway\HttpClient\GuzzleHttpClient;
 use GuzzleHttp\Client;
 use stdClass;
@@ -21,7 +22,7 @@ class GuzzleHttpClientTest extends UnitTestCase
   public function testRunsValidRequest()
   {
     $client = Mockery::mock(Client::class);
-    $response = Mockery::mock(stdClass::class);
+    $response = Mockery::mock(ResponseInterface::class);
     $url = 'http://example.com';
     $parameters = ['a' => 'b', 'c' => 'd'];
     $responseBody = 'foo=bar&baz=foo';
